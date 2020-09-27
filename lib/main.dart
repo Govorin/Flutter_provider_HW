@@ -8,7 +8,6 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,9 +16,12 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MultiProvider(providers: [
-        ChangeNotifierProvider<ColorProvider>.value(value: ColorProvider())
-      ], child: Page()),
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<ColorProvider>.value(value: ColorProvider())
+        ],
+        child: Page(),
+      ),
     );
   }
 }
@@ -59,65 +61,6 @@ class PageState extends State {
                     isInstructionView = value;
                   },
                   value: isInstructionView,
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class FirstPage extends StatefulWidget {
-  FirstPage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _FirstPageState createState() => _FirstPageState();
-}
-
-class _FirstPageState extends State<FirstPage> {
-  Color headerColor;
-  bool isSwitched = false;
-
-  void updateColor(Color color) {
-    setState(() {
-      headerColor = color;
-    });
-  }
-
-  Widget build(BuildContext context) {
-    ColorProvider state = Provider.of<ColorProvider>(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          state.headerColor.toString(),
-          style: TextStyle(color: state.headerColor),
-        ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            AnimatedContainer(
-              height: 200,
-              width: 200,
-              color: state.headerColor,
-              duration: Duration(seconds: 1),
-            ),
-            Consumer<ColorProvider>(
-              builder: (context, value, child) {
-                return Switch(
-                  onChanged: (value) {
-                    state.changeColors();
-                    updateColor(
-                      state.headerColor,
-                    );
-                    isSwitched = value;
-                  },
-                  value: isSwitched,
                 );
               },
             ),
